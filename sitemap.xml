@@ -1,1 +1,18 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"><url><loc>https://btsea.github.io/bitcoinfibre-site/</loc><lastmod>2019-08-01T16:19:26+06:00</lastmod></url><url><loc>https://btsea.github.io/bitcoinfibre-site/faqs/</loc><lastmod>2019-08-01T16:19:26+06:00</lastmod></url><url><loc>https://btsea.github.io/bitcoinfibre-site/setup-guide/</loc><lastmod>2019-08-01T16:19:26+06:00</lastmod></url><url><loc>https://btsea.github.io/bitcoinfibre-site/categories/</loc></url><url><loc>https://btsea.github.io/bitcoinfibre-site/tags/</loc></url></urlset>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>http://lclhst.org/</loc>
+    <lastmod>2019-08-01T16:19:26+06:00</lastmod>
+  </url><url>
+    <loc>http://lclhst.org/faqs/</loc>
+    <lastmod>2019-08-01T16:19:26+06:00</lastmod>
+  </url><url>
+    <loc>http://lclhst.org/setup-guide/</loc>
+    <lastmod>2019-08-01T16:19:26+06:00</lastmod>
+  </url><url>
+    <loc>http://lclhst.org/categories/</loc>
+  </url><url>
+    <loc>http://lclhst.org/tags/</loc>
+  </url>
+</urlset>

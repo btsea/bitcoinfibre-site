@@ -1,23 +1,509 @@
-<!doctype html><html lang=en-us><head><meta charset=utf-8><title>FIBRE</title><meta name=viewport content="width=device-width,initial-scale=1"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta name=description content="this is meta description"><meta name=author content="FIBRE"><meta name=theme-name content="agen-hugo"><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/plugins/bootstrap/bootstrap.min.css><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/plugins/slick/slick.css><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/plugins/themify-icons/themify-icons.css><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/plugins/venobox/venobox.css><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/plugins/card-slider/css/style.css><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/scss/style.min.b54209a235ecbc39a638dbdbe9e6410d1d056880a040fefc4f4ec05f4c9734ba.css integrity="sha256-tUIJojXsvDmmONvb6eZBDR0FaICgQP78T07AX0yXNLo=" media=screen><link rel="shortcut icon" href=https://btsea.github.io/bitcoinfibre-site/images/favicon.png type=image/x-icon><link rel=icon href=https://btsea.github.io/bitcoinfibre-site/images/favicon.png type=image/x-icon></head><body><div class=preloader></div><header class="navigation fixed-top"><nav class="navbar navbar-expand-lg navbar-dark"><a class=navbar-brand href=https://btsea.github.io/bitcoinfibre-site/><img src=https://btsea.github.io/bitcoinfibre-site/images/logo.png alt=FIBRE></a>
-<button class=navbar-toggler type=button data-toggle=collapse data-target=#navigation aria-controls=navigation aria-expanded=false aria-label="Toggle navigation">
-<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse text-center" id=navigation><ul class="navbar-nav ml-auto"><li class=nav-item><a class=nav-link href=https://btsea.github.io/bitcoinfibre-site/></a></li><li class=nav-item><a class=nav-link href=https://btsea.github.io/bitcoinfibre-site/faqs/>FAQ</a></li><li class=nav-item><a class=nav-link href=https://btsea.github.io/bitcoinfibre-site/setup-guide/>Setup Guide</a></li><li class=nav-item><a class=nav-link href=https://bitcoinfibre.org/network-stats/>Public Network Stats</a></li></ul></div></nav></header><section class="page-title bg-cover" data-background=https://btsea.github.io/bitcoinfibre-site/images/backgrounds/fibre_sol_2.png><div class=container><div class=row><div class="col-12 text-center"><h1 class="display-1 text-white font-weight-bold font-primary">Frequently Asked Questions</h1></div></div></div></section><section class=section style="background-color:#212529;padding:3rem 0"><div class=container><div class=row><div class=col-12><div id=accordion><div class="card mb-4 rounded-0 border-0" id=faq-1><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion1 style=text-decoration:none><span>What is the FIBRE protocol?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion1 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>The Fast Internet Bitcoin Relay Engine (FIBRE) is a specialized patchset on Bitcoin Core that enables a low-latency network of nodes to relay blocks near the speed-of-light bound in fiber.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-2><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion2 style=text-decoration:none><span>Why does fast block propagation matter?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion2 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>Fast block propagation minimizes the window during which miners are working on divergent tips, thereby reducing stale block rates and improving the effective hashrate utilization of the network. This is particularly important given the <a href=https://eprint.iacr.org/2023/891.pdf>significant disadvantage</a> smaller miners have in stale block races. Fast propagation thus reduces the advantage larger miners or regions with many miners have.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-3><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion3 style=text-decoration:none><span>But stale block rates have been fairly low since the deployment of Compact Blocks (BIP 152), why is this necessary?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion3 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>Stale races should be minimized at all costs–even if perceived rates are low at any given moment, it only takes small increases to cause significant harm to low-margin mining operations. Additionally, Bitcoin mining has become highly <a href=https://b10c.me/blog/015-bitcoin-mining-centralization/>centralized</a>–there exists a very small subset of block template proposers. We believe this, at least in part, keeps the stale rate artificially low. However, we hope to see the Bitcoin network move to more client-side templating and decentralized pooling schemes. In a world with more block template producers, stale rates are poised to increase. In this scenario, the existence of FIBRE and FIBRE-like networks is critical to reducing the occurrence of stale races.<br><br>Notably, there are likely more stale blocks occurring than the network detects. With the introduction of a <a href=https://delvingbitcoin.org/t/propagation-delay-and-mining-centralization-modeling-stale-rates/2110/2>STALEHEADER</a> Compact Block message, we likely would detect more.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-4><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion4 style=text-decoration:none><span>What is Compact Blocks and how does it relate to the FIBRE network?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion4 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>Compact Blocks is a relay protocol that minimizes both the bandwidth and latency required for block propagation by utilizing techniques of compression and reconstruction. Instead of propagating a full block and its contents, peers announce compact blocks with shortened transaction ids. The receiving peer can, to the extent possible, reconstruct the block utilizing the contents of their local mempool. The FIBRE protocol utilizes Compact Blocks as a foundation for its patchset, upon which it introduces additional logic.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-5><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion5 style=text-decoration:none><span>What is included in the FIBRE protocol’s patchset?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion5 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>The FIBRE protocol is a patchset that is maintained against Bitcoin Core. Within this patchset are two primary changes<code>:</code> the introduction of the UDP transport protocol as well as logic to support Forward Error Correction. There are also additional configuration options and some modifications made to the Compact Block peering logic.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-6><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion6 style=text-decoration:none><span>Is the FIBRE protocol open source?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion6 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>Yes! The protocol is <a href>open source</a>.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-7><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion7 style=text-decoration:none><span>Why introduce UDP?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion7 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>Bitcoin Core uses TCP, which delivers an in‑order byte stream. Its reliability depends on ACKs and retransmission, so loss can trigger long tail latencies. Moreover, widely deployed loss‑based congestion control favors shorter‑RTT flows, penalizing long‑haul fiber paths that can contribute to block propagation delays. UDP enables one-way push, eliminating TCP’s ordering and retransmission constraints, enabling FIBRE to deliver blocks with latency bound in fiber rather than transport-layer limitations.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-8><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion8 style=text-decoration:none><span>Why introduce Forward Error Correction (FEC)?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion8 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>Unlike TCP, UDP does not resend dropped or corrupted packets. To balance this limitation, FIBRE utilizes FEC; FEC adds redundant data to a transmission so the receiver can correct errors or recover lost pieces without requesting retransmission, reducing delay from packet loss. In the context of Bitcoin, we must transmit enough extra data that the receiving peer can reconstruct the entire block even though some packets were lost on the way.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-9><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion9 style=text-decoration:none><span>What data is sent with FEC?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion9 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>Because Compact Block was being designed at the same time that Matt Corallo started his work on FIBRE, the cmpctblock message format was structured to ensure it fits neatly into a UDP-FEC-based relay mechanism. The primary difference between FIBRE and the standard Compact Blocks protocol is that FIBRE send the message over UDP with FEC, and instead of relying on a round-trip to request any missing transactions in our mempool, FIBRE sends the block’s transactions immediately, again with FEC.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-10><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion10 style=text-decoration:none><span>Why was the wirehair FEC scheme selected for use?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion10 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>During FIBRE’s initial design phase, Matt Corallo and Greg Maxwell researched a number of FEC schemes designed by <a href>Chris Taylor</a>, including <a href>leopard</a> and <a href>fecal</a>. Given network conditions at the time, wirehair was most performant. If you are familiar with erasure codes and are aware of a more performant FEC scheme that you would like to propose, please <a href>open an issue</a>.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-11><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion11 style=text-decoration:none><span>What other changes were made to Bitcoin Core’s Compact Blocks implementation in the FIBRE patchset?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion11 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>Compact Block has two modes<code>:</code> “low-bandwidth” and “high-bandwidth.” In the low-bandwidth mode, compact block delivery requires a communication round trip. In high-bandwidth mode, compact block announcements include the block’s short transaction IDs, thus avoiding a round trip. Currently, Bitcoin Core only supports three high-bandwidth peer slots. These slots are reserved for the best performing peers (i.e. the peers who deliver blocks to you the fastest). The FIBRE protocol announces all of its compact blocks in high-bandwidth mode, regardless of whether or not it has secured a high-bandwidth slot with its non-FIBRE peers. It is expected that FIBRE nodes will ultimately secure High Bandwidth slots, but to ensure best performance in all contexts, it operates all of its outbound connections as though they were high-bandwidth. Bitcoin Core does not penalize or discourage this behavior.<br><br>Additionally, FIBRE nodes relay individual packets to their peers as soon as they arrive (i.e. before validating them), thereby avoiding latency introduced by additional hops.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-12><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion12 style=text-decoration:none><span>Why isn’t the FIBRE logic implemented directly in Bitcoin Core?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion12 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>It’s possible that one day some of the logic in FIBRE may make its way upstream to Bitcoin Core. For now, we hope to utilize the FIBRE network as an opportunity to re-establish the value of the patchset and find new ways to improve upon it.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-13><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion13 style=text-decoration:none><span>So there is a network of UDP-connected FIBRE nodes that maintain high-bandwidth Compact Block slots with Bitcoin Core nodes? And these Bitcoin Core nodes are ultimately peered directly with the Bitcoin gossip network? Who runs the Bitcoin Core nodes that connect to the FIBRE network?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion13 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>That’s correct! In theory, anyone can run a Bitcoin Core node that connects to the FIBRE network. In practice, FIBRE Network Operators (FNO) may choose to selectively peer with block producers to ensure the lowest possible latency of block propagation across the network.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-14><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion14 style=text-decoration:none><span>Who is running the FIBRE network?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion14 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>Anyone can deploy a FIBRE network and become a FNO. One such production network is operated by the non-profit research center, Localhost Research. Currently, Localhost Research operates a network that connects New York, London, Frankfurt, Beijing, Tokyo, and Seattle. You can observe the network statistics <a href=https://bitcoinfibre.org/network-stats/>here</a>.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-15><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion15 style=text-decoration:none><span>How do I connect to the FIBRE network operated by Localhost Research? Do I need to run a FIBRE node?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion15 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>No, you don’t need to run a FIBRE node! You are only required to run Bitcoin Core or similar software that is compatible with the Compact Blocks specification. Once you have selected a FIBRE node with ideal peering to your mining operation’s template producer, you can simply use the addnode configuration option. We&rsquo;ll have more information on how to connect in the coming weeks.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-16><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion16 style=text-decoration:none><span>But doesn’t it improve performance if I peer with the FIBRE network using my own FIBRE node?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion16 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>The FIBRE protocol trades off DoS resistance for latency. To ensure that packets are relayed as quickly as possible, they are not validated. This means that nodes within the FIBRE network must be operated with strong trust assumptions and that external parties can only peer with it over TCP utilizing the standard high-bandwidth Compact Blocks protocol.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-17><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion17 style=text-decoration:none><span>Isn’t that centralized? Can a FNO censor specific participants?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion17 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>While any single FIBRE network is centrally operated, anyone can spin up a network of FIBRE nodes. In fact, we strongly encourage independent FIBRE network operation and are happy to assist anyone with questions not answered here and in our <a href>setup guide</a>.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-18><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion18 style=text-decoration:none><span>How do I run my own FIBRE network?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion18 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>Please read our <a href>Setup Guide</a>.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-19><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion19 style=text-decoration:none><span>What is the history of FIBRE?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion19 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>The FIBRE network is the successor to Matt Corallo’s <a href=https://bitcoinrelaynetwork.org/>Bitcoin Relay Network</a>). With his experience operating and studying the Bitcoin Relay network from XXXX to XXXX, alongside <a href=https://nt4tn.net/tech-notes/201512.lowlatency.block.xfer.txt>some</a> <a href=https://nt4tn.net/tech-notes/201512.efficient.block.xfer.txt>research</a> done by Greg Maxwell, Matt Corallo <a href=https://bluematt.bitcoin.ninja/2016/07/07/relay-networks/>designed, implemented, and maintained</a> the FIBRE protocol from XXXX until April 2017. In 2025, the maintenance of the project was taken over by w0xlt and Justin of Localhost Research under the advisory of Matt Corallo and Greg Maxwell.</div></div></div><div class="card mb-4 rounded-0 border-0" id=faq-20><div class="card-header rounded-0 bg-dark border p-0 border-0"><a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle=collapse href=#accordion20 style=text-decoration:none><span>How does the FIBRE protocol differ from the original Bitcoin Relay Network?</span>
-<i class="ti-plus text-right text-white"></i></a></div><div id=accordion20 class=collapse data-parent=#accordion><div class="card-body font-secondary text-light" style=background-color:#1a1a1a>FIBRE improves on the design of the Bitcoin Relay Network primarily in two ways<code>:</code> it eliminates latency spikes by utilizing FEC and leverages the Compact Blocks protocol that has since become available in Bitcoin Core. For additional historical context, please read Matt Corallo&rsquo;s <a href=https://bluematt.bitcoin.ninja/2016/07/07/relay-networks/>The Future of The Bitcoin Relay Network(s).</a></div></div></div></div></div></div></div></section><section id=site-footer style="background-image:url(https://btsea.github.io/bitcoinfibre-site/images/banner/fibre_sol_footer.png);background-size:cover;background-position:50%;padding:1.5rem 1rem;margin-top:3rem;color:#fff"><div style="max-width:75ch;margin:0 auto;text-align:center"><h2 style=margin-bottom:.5rem;font-size:1.25rem;color:#fff;font-weight:600></h2><p style=text-align:center;color:#fff;font-size:.875rem;margin:0>MIT License. <a href=https://github.com/bitcoinfibre/bitcoinfibre>Source</a>.</p></div></section><script src=https://btsea.github.io/bitcoinfibre-site/></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/jQuery/jquery.min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/bootstrap/bootstrap.min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/slick/slick.min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/venobox/venobox.min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/shuffle/shuffle.min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/counto/apear.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/counto/counTo.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/card-slider/js/card-slider-min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/js/script.min.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en-us"><head>
+  <meta charset="utf-8">
+  <title>FIBRE</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="this is meta description">
+  <meta name="author" content="FIBRE">
+  
+  <meta name="theme-name" content="agen-hugo" />
+
+  <!-- plugins -->
+  
+  <link rel="stylesheet" href="http://lclhst.org/plugins/bootstrap/bootstrap.min.css ">
+  
+  <link rel="stylesheet" href="http://lclhst.org/plugins/slick/slick.css ">
+  
+  <link rel="stylesheet" href="http://lclhst.org/plugins/themify-icons/themify-icons.css ">
+  
+  <link rel="stylesheet" href="http://lclhst.org/plugins/venobox/venobox.css ">
+  
+  <link rel="stylesheet" href="http://lclhst.org/plugins/card-slider/css/style.css ">
+  
+
+  <!-- Main Stylesheet -->
+  
+  <link rel="stylesheet" href="http://lclhst.org/scss/style.min.b54209a235ecbc39a638dbdbe9e6410d1d056880a040fefc4f4ec05f4c9734ba.css" integrity="sha256-tUIJojXsvDmmONvb6eZBDR0FaICgQP78T07AX0yXNLo=" media="screen">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="http://lclhst.org/images/favicon.png " type="image/x-icon">
+  <link rel="icon" href="http://lclhst.org/images/favicon.png " type="image/x-icon">
+
+</head><body>
+<!-- preloader start -->
+<div class="preloader">
+  
+</div>
+<!-- preloader end -->
+<header class="navigation fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="http://lclhst.org/"><img src="http://lclhst.org/images/logo.png" alt="FIBRE"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+      aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse text-center" id="navigation">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="http://lclhst.org/"></a>
+        </li>
+        
+        
+        <li class="nav-item">
+          <a class="nav-link" href="http://lclhst.org/faqs/">FAQ</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link" href="http://lclhst.org/setup-guide/">Setup Guide</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link" href="https://bitcoinfibre.org/network-stats/">Public Network Stats</a>
+        </li>
+        
+        
+      </ul>
+    </div>
+  </nav>
+</header>
+
+
+<section class="page-title bg-cover" data-background="http://lclhst.org/images/backgrounds/fibre_sol_2.png">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="display-1 text-white font-weight-bold font-primary">Frequently Asked Questions</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section" style="background-color: #212529; padding: 3rem 0;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div id="accordion">
+          
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-1">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion1" style="text-decoration: none;">
+                <span>What is the FIBRE protocol?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion1" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                The Fast Internet Bitcoin Relay Engine (FIBRE) is a specialized patchset on Bitcoin Core that enables a low-latency network of nodes to relay blocks near the speed-of-light bound in fiber.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-2">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion2" style="text-decoration: none;">
+                <span>Why does fast block propagation matter?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion2" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                Fast block propagation minimizes the window during which miners are working on divergent tips, thereby reducing stale block rates and improving the effective hashrate utilization of the network. This is particularly important given the <a href="https://eprint.iacr.org/2023/891.pdf">significant disadvantage</a> smaller miners have in stale block races. Fast propagation thus reduces the advantage larger miners or regions with many miners have.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-3">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion3" style="text-decoration: none;">
+                <span>But stale block rates have been fairly low since the deployment of Compact Blocks (BIP 152), why is this necessary?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion3" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                Stale races should be minimized at all costs–even if perceived rates are low at any given moment, it only takes small increases to cause significant harm to low-margin mining operations. Additionally, Bitcoin mining has become highly <a href="https://b10c.me/blog/015-bitcoin-mining-centralization/">centralized</a>–there exists a very small subset of block template proposers. We believe this, at least in part, keeps the stale rate artificially low. However, we hope to see the Bitcoin network move to more client-side templating and decentralized pooling schemes. In a world with more block template producers, stale rates are poised to increase. In this scenario, the existence of FIBRE and FIBRE-like networks is critical to reducing the occurrence of stale races. <br> <br> Notably, there are likely more stale blocks occurring than the network detects. With the introduction of a <a href="https://delvingbitcoin.org/t/propagation-delay-and-mining-centralization-modeling-stale-rates/2110/2">STALEHEADER</a> Compact Block message, we likely would detect more.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-4">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion4" style="text-decoration: none;">
+                <span>What is Compact Blocks and how does it relate to the FIBRE network?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion4" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                Compact Blocks is a relay protocol that minimizes both the bandwidth and latency required for block propagation by utilizing techniques of compression and reconstruction. Instead of propagating a full block and its contents, peers announce compact blocks with shortened transaction ids. The receiving peer can, to the extent possible, reconstruct the block utilizing the contents of their local mempool. The FIBRE protocol utilizes Compact Blocks as a foundation for its patchset, upon which it introduces additional logic.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-5">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion5" style="text-decoration: none;">
+                <span>What is included in the FIBRE protocol’s patchset?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion5" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                The FIBRE protocol is a patchset that is maintained against Bitcoin Core. Within this patchset are two primary changes<code>:</code> the introduction of the UDP transport protocol as well as logic to support Forward Error Correction. There are also additional configuration options and some modifications made to the Compact Block peering logic.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-6">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion6" style="text-decoration: none;">
+                <span>Is the FIBRE protocol open source?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion6" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                Yes! The protocol is <a href="">open source</a>.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-7">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion7" style="text-decoration: none;">
+                <span>Why introduce UDP?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion7" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                Bitcoin Core uses TCP, which delivers an in‑order byte stream. Its reliability depends on ACKs and retransmission, so loss can trigger long tail latencies. Moreover, widely deployed loss‑based congestion control favors shorter‑RTT flows, penalizing long‑haul fiber paths that can contribute to block propagation delays. UDP enables one-way push, eliminating TCP’s ordering and retransmission constraints, enabling FIBRE to deliver blocks with latency bound in fiber rather than transport-layer limitations.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-8">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion8" style="text-decoration: none;">
+                <span>Why introduce Forward Error Correction (FEC)?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion8" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                Unlike TCP, UDP does not resend dropped or corrupted packets. To balance this limitation, FIBRE utilizes FEC; FEC adds redundant data to a transmission so the receiver can correct errors or recover lost pieces without requesting retransmission, reducing delay from packet loss. In the context of Bitcoin, we must transmit enough extra data that the receiving peer can reconstruct the entire block even though some packets were lost on the way.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-9">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion9" style="text-decoration: none;">
+                <span>What data is sent with FEC?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion9" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                Because Compact Block was being designed at the same time that Matt Corallo started his work on FIBRE, the cmpctblock message format was structured to ensure it fits neatly into a UDP-FEC-based relay mechanism. The primary difference between FIBRE and the standard Compact Blocks protocol is that FIBRE send the message over UDP with FEC, and instead of relying on a round-trip to request any missing transactions in our mempool, FIBRE sends the block’s transactions immediately, again with FEC.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-10">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion10" style="text-decoration: none;">
+                <span>Why was the wirehair FEC scheme selected for use?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion10" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                During FIBRE’s initial design phase, Matt Corallo and Greg Maxwell researched a number of FEC schemes designed by <a href="">Chris Taylor</a>, including <a href="">leopard</a> and <a href="">fecal</a>. Given network conditions at the time, wirehair was most performant. If you are familiar with erasure codes and are aware of a more performant FEC scheme that you would like to propose, please <a href="">open an issue</a>.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-11">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion11" style="text-decoration: none;">
+                <span>What other changes were made to Bitcoin Core’s Compact Blocks implementation in the FIBRE patchset?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion11" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                Compact Block has two modes<code>:</code> “low-bandwidth” and “high-bandwidth.” In the low-bandwidth mode, compact block delivery requires a communication round trip. In high-bandwidth mode, compact block announcements include the block’s short transaction IDs, thus avoiding a round trip. Currently, Bitcoin Core only supports three high-bandwidth peer slots. These slots are reserved for the best performing peers (i.e. the peers who deliver blocks to you the fastest). The FIBRE protocol announces all of its compact blocks in high-bandwidth mode, regardless of whether or not it has secured a high-bandwidth slot with its non-FIBRE peers. It is expected that FIBRE nodes will ultimately secure High Bandwidth slots, but to ensure best performance in all contexts, it operates all of its outbound connections as though they were high-bandwidth. Bitcoin Core does not penalize or discourage this behavior. <br><br> Additionally, FIBRE nodes relay individual packets to their peers as soon as they arrive (i.e. before validating them), thereby avoiding latency introduced by additional hops.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-12">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion12" style="text-decoration: none;">
+                <span>Why isn’t the FIBRE logic implemented directly in Bitcoin Core?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion12" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                It’s possible that one day some of the logic in FIBRE may make its way upstream to Bitcoin Core. For now, we hope to utilize the FIBRE network as an opportunity to re-establish the value of the patchset and find new ways to improve upon it.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-13">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion13" style="text-decoration: none;">
+                <span>So there is a network of UDP-connected FIBRE nodes that maintain high-bandwidth Compact Block slots with Bitcoin Core nodes? And these Bitcoin Core nodes are ultimately peered directly with the Bitcoin gossip network? Who runs the Bitcoin Core nodes that connect to the FIBRE network?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion13" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                That’s correct! In theory, anyone can run a Bitcoin Core node that connects to the FIBRE network. In practice, FIBRE Network Operators (FNO) may choose to selectively peer with block producers to ensure the lowest possible latency of block propagation across the network.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-14">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion14" style="text-decoration: none;">
+                <span>Who is running the FIBRE network?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion14" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                Anyone can deploy a FIBRE network and become a FNO. One such production network is operated by the non-profit research center, Localhost Research. Currently, Localhost Research operates a network that connects New York, London, Frankfurt, Beijing, Tokyo, and Seattle. You can observe the network statistics <a href="https://bitcoinfibre.org/network-stats/">here</a>.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-15">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion15" style="text-decoration: none;">
+                <span>How do I connect to the FIBRE network operated by Localhost Research? Do I need to run a FIBRE node?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion15" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                No, you don’t need to run a FIBRE node! You are only required to run Bitcoin Core or similar software that is compatible with the Compact Blocks specification. Once you have selected a FIBRE node with ideal peering to your mining operation’s template producer, you can simply use the addnode configuration option. We&rsquo;ll have more information on how to connect in the coming weeks.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-16">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion16" style="text-decoration: none;">
+                <span>But doesn’t it improve performance if I peer with the FIBRE network using my own FIBRE node?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion16" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                The FIBRE protocol trades off DoS resistance for latency. To ensure that packets are relayed as quickly as possible, they are not validated. This means that nodes within the FIBRE network must be operated with strong trust assumptions and that external parties can only peer with it over TCP utilizing the standard high-bandwidth Compact Blocks protocol.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-17">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion17" style="text-decoration: none;">
+                <span>Isn’t that centralized? Can a FNO censor specific participants?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion17" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                While any single FIBRE network is centrally operated, anyone can spin up a network of FIBRE nodes. In fact, we strongly encourage independent FIBRE network operation and are happy to assist anyone with questions not answered here and in our <a href="">setup guide</a>.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-18">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion18" style="text-decoration: none;">
+                <span>How do I run my own FIBRE network?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion18" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                Please read our <a href="">Setup Guide</a>.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-19">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion19" style="text-decoration: none;">
+                <span>What is the history of FIBRE?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion19" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                The FIBRE network is the successor to Matt Corallo’s <a href="https://bitcoinrelaynetwork.org/">Bitcoin Relay Network</a>). With his experience operating and studying the Bitcoin Relay network from XXXX to XXXX, alongside <a href="https://nt4tn.net/tech-notes/201512.lowlatency.block.xfer.txt">some</a> <a href="https://nt4tn.net/tech-notes/201512.efficient.block.xfer.txt">research</a> done by Greg Maxwell, Matt Corallo <a href="https://bluematt.bitcoin.ninja/2016/07/07/relay-networks/">designed, implemented, and maintained</a> the FIBRE protocol from XXXX until April 2017. In 2025, the maintenance of the project was taken over by w0xlt and Justin of Localhost Research under the advisory of Matt Corallo and Greg Maxwell.
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <!-- accordion item -->
+          <div class="card mb-4 rounded-0 border-0" id="faq-20">
+            <div class="card-header rounded-0 bg-dark border p-0 border-0">
+              <a class="card-link h4 d-flex text-white mb-0 py-3 px-4 justify-content-between" data-toggle="collapse" href="#accordion20" style="text-decoration: none;">
+                <span>How does the FIBRE protocol differ from the original Bitcoin Relay Network?</span>
+                <i class="ti-plus text-right text-white"></i>
+              </a>
+            </div>
+            <div id="accordion20" class="collapse" data-parent="#accordion">
+              <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
+                FIBRE improves on the design of the Bitcoin Relay Network primarily in two ways<code>:</code> it eliminates latency spikes by utilizing FEC and leverages the Compact Blocks protocol that has since become available in Bitcoin Core. For additional historical context, please read Matt Corallo&rsquo;s <a href="https://bluematt.bitcoin.ninja/2016/07/07/relay-networks/">The Future of The Bitcoin Relay Network(s).</a>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section
+  id="site-footer"
+  style="
+    background-image: url('http://lclhst.org/images/banner/fibre_sol_footer.png');
+    background-size: cover;
+    background-position: center;
+    padding: 1.5rem 1rem;
+    margin-top: 3rem;
+    color: white;
+  "
+>
+  <div style="max-width: 75ch; margin: 0 auto; text-align: center;">
+    <h2 style="
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+      color: white;
+      font-weight: 600;
+    ">
+      
+    </h2>
+    <p style="
+      text-align: center;
+      color: white;
+      font-size: 0.875rem;
+      margin: 0;
+    ">
+      MIT License. <a href="https://github.com/bitcoinfibre/bitcoinfibre">Source</a>.
+    </p>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<!-- Google Map API -->
+<script src="http://lclhst.org/"></script>
+<!-- JS Plugins -->
+
+<script src="http://lclhst.org/plugins/jQuery/jquery.min.js"></script>
+
+<script src="http://lclhst.org/plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="http://lclhst.org/plugins/slick/slick.min.js"></script>
+
+<script src="http://lclhst.org/plugins/venobox/venobox.min.js"></script>
+
+<script src="http://lclhst.org/plugins/shuffle/shuffle.min.js"></script>
+
+<script src="http://lclhst.org/plugins/counto/apear.js"></script>
+
+<script src="http://lclhst.org/plugins/counto/counTo.js"></script>
+
+<script src="http://lclhst.org/plugins/card-slider/js/card-slider-min.js"></script>
+
+<!-- Main Script -->
+
+<script src="http://lclhst.org/js/script.min.js"></script></body>
+</html>

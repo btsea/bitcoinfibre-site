@@ -1,3 +1,178 @@
-<!doctype html><html lang=en-us><head><meta charset=utf-8><title>FIBRE</title><meta name=viewport content="width=device-width,initial-scale=1"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta name=description content="How to setup a FIBRE network."><meta name=author content="FIBRE"><meta name=theme-name content="agen-hugo"><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/plugins/bootstrap/bootstrap.min.css><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/plugins/slick/slick.css><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/plugins/themify-icons/themify-icons.css><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/plugins/venobox/venobox.css><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/plugins/card-slider/css/style.css><link rel=stylesheet href=https://btsea.github.io/bitcoinfibre-site/scss/style.min.b54209a235ecbc39a638dbdbe9e6410d1d056880a040fefc4f4ec05f4c9734ba.css integrity="sha256-tUIJojXsvDmmONvb6eZBDR0FaICgQP78T07AX0yXNLo=" media=screen><link rel="shortcut icon" href=https://btsea.github.io/bitcoinfibre-site/images/favicon.png type=image/x-icon><link rel=icon href=https://btsea.github.io/bitcoinfibre-site/images/favicon.png type=image/x-icon></head><body><div class=preloader></div><header class="navigation fixed-top"><nav class="navbar navbar-expand-lg navbar-dark"><a class=navbar-brand href=https://btsea.github.io/bitcoinfibre-site/><img src=https://btsea.github.io/bitcoinfibre-site/images/logo.png alt=FIBRE></a>
-<button class=navbar-toggler type=button data-toggle=collapse data-target=#navigation aria-controls=navigation aria-expanded=false aria-label="Toggle navigation">
-<span class=navbar-toggler-icon></span></button><div class="collapse navbar-collapse text-center" id=navigation><ul class="navbar-nav ml-auto"><li class=nav-item><a class=nav-link href=https://btsea.github.io/bitcoinfibre-site/></a></li><li class=nav-item><a class=nav-link href=https://btsea.github.io/bitcoinfibre-site/faqs/>FAQ</a></li><li class=nav-item><a class=nav-link href=https://btsea.github.io/bitcoinfibre-site/setup-guide/>Setup Guide</a></li><li class=nav-item><a class=nav-link href=https://bitcoinfibre.org/network-stats/>Public Network Stats</a></li></ul></div></nav></header><section class="page-title bg-cover" data-background=https://btsea.github.io/bitcoinfibre-site/images/backgrounds/fibre_sol_3.png><div class=container><div class=row><div class="col-12 text-center"><h1 class="display-1 text-white font-weight-bold font-primary">Setup Guide</h1></div></div></div></section><div style=height:2rem></div><div style="max-width:75ch;margin:0 auto;padding:0 1rem"><p>Before reading the setup guide, please review the <a href>FAQ</a>.</p><p>Setting up and configuring a FIBRE network requires two distinct efforts: investigating and selecting server locations and then configuring and connecting the nodes. For those who wish to become a FIBRE Network Operator (FNO), we strongly recommend you spend time carefully considering and researching the topology of your deployment, as this will be the primary limiting factor on relay performance. Ultimately, software and hardware level optimizations will not be able to overcome poorly-selected interconnects.</p><h3 id=network-topology>Network Topology</h3><br><p>The physics of light through fiber imposes a fundamental limit on relay performance. The speed of light in a vacuum divided by the glass refractive index results in speeds of approximately 200km/ms. Your goal as a FNO is to approach this theoretical minimum.</p><p>To achieve this goal, you’ll want to select servers near large cable landing points. The <a href=https://www.submarinecablemap.com/>Submarine Cable Map</a> is an excellent reference for this phase of your planning. However, it’s important to note that proximity to a desirable submarine cable does not guarantee access. Hosting providers have peering relationships that vary widely. Even two hosting providers in the same datacenter will often have entirely different routes to the same destination. This is because BGP makes path selections based on policy, commercial agreements, and AS-level relationships rather than physical geography.</p><p>Additionally, some cables are privately owned and managed, making them inaccessible to the general public. A prime example is Meta’s <a href=https://www.submarinecablemap.com/submarine-cable/project-waterworth>Project Waterworth</a> —a cable that runs from the US east coast to Brazil, South Africa, India, and Australia, before looping back to terminate on the US west coast. While the cable itself is very desirable to a FNO, unfortunately it is <a href=https://techcrunch.com/2024/11/29/meta-plans-to-build-a-10b-subsea-cable-spanning-the-world-sources-say/>only accessible</a> to Meta and its subsidiaries.</p><p>When investigating potential hosting providers, we recommend first focusing on those that have public Looking Glass tools. That way you can execute a traceroute between candidate providers to test performance before signing up. And while traceroute is a powerful tool, it can be misleading! It only reveals Layer 3 hops, which means entire classes of infrastructure are not surfaced. Use it as a guide, but treat the output as a partial sketch of the path. Also, do not forget to probe your route bidirectionally, as routing is asymmetric. The path packets from provider A -> B are likely entirely different from the path packets take from B -> A.</p><p>For large well established cities, you may also be able to identify potential datacenters by the buildings they are located in and the publicly documented peering relationships they have. If you can, identify hosting providers that maintain a presence in buildings that are also IXP points. This will give you access to the greatest number of potential routing paths and likely yield higher levels of reliability in routing performance over the lifetime of your FIBRE network. Tools like <a href=https://www.peeringdb.com/>PeeringDB</a> and <a href=https://www.datacentermap.com/>DataCenterMaps</a> are very useful at this stage of the process.</p><p>Sometimes, you may come across a single hosting provider who has availability across multiple cities in your target areas. Operationally this is ideal because it lowers the overhead of managing your infrastructure and makes for a more unified experience. But more importantly, these providers generally operate their own Autonomous Systems and establish strategic peering relationships to ensure optimal routing within their network of hosts. This offers more predictable paths than those you’d achieve by stitching together unrelated hosts from different providers, each of whom would route your traffic independently through their own upstream transit relationships.</p><h3 id=node-setup>Node Setup</h3><br><p>The overhead required to run FIBRE is minimal relative to an unmodified version of Bitcoin Core. While bare metal is certainly the most desirable platform for predictable performance, an adequately resourced VPS should suffice, with the caveat that you may observe latency spikes due to virtualisation overhead, noisy neighbors, network interface poll frequency, and uncontrollable swap usage. It is recommended you disable swap space, at least for the bitcoind process.</p><p>FIBRE introduces some RPC commands and configuration options. Among these is the <code>-addtrustedudpnode</code> option, which connects a set of &ldquo;trusted&rdquo; FIBRE nodes. These nodes are considered trusted because data received from them is relayed before being fully validated. This is necessary because, due to the nature of FIBRE&rsquo;s FEC encoding, there is no way to know whether individual packets are legitimate until the block has been fully reconstructed. This represents the fundamental tradeoff that FIBRE makes: sacrificing DoS resistance in exchange for lower latency.</p><p>Once you’ve set up your network, you must monitor it. Peering relationships change and once-performant routes can silently degrade. To that end, we&rsquo;ve instrumented bitcoind with USDT tracepoints for benchmarking block propagation. At runtime, an eBPF-based exporter captures these metrics and feeds them to Prometheus while Promtail streams the node&rsquo;s debug log into Loki. Both sources converge in a single Grafana dashboard, offering a real-time view of relay health.</p><p>Finally, to ensure the reliability of the data surfaced by these monitoring tools, it is important that your FIBRE nodes are time-synced. We recommend utilizing ntp with peering between neighboring nodes to establish a relative consensus, while anchoring each node to a reliable ntp server.</p></div><style>#site-footer a{color:#fff!important;text-decoration:underline}</style><section id=site-footer style="background-image:url(https://btsea.github.io/bitcoinfibre-site/images/banner/fibre_sol_footer.png);background-size:cover;background-position:50%;padding:1.5rem 1rem;margin-top:3rem;color:#fff"><div style="max-width:75ch;margin:0 auto;text-align:center"><h2 style=margin-bottom:.5rem;font-size:1.25rem;color:#fff;font-weight:600></h2><p style=text-align:center;color:#fff;font-size:.875rem;margin:0>MIT License. <a href=https://github.com/bitcoinfibre/bitcoinfibre>Source</a>.</p></div></section><script src=https://btsea.github.io/bitcoinfibre-site/></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/jQuery/jquery.min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/bootstrap/bootstrap.min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/slick/slick.min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/venobox/venobox.min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/shuffle/shuffle.min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/counto/apear.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/counto/counTo.js></script><script src=https://btsea.github.io/bitcoinfibre-site/plugins/card-slider/js/card-slider-min.js></script><script src=https://btsea.github.io/bitcoinfibre-site/js/script.min.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en-us"><head>
+  <meta charset="utf-8">
+  <title>FIBRE</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="How to setup a FIBRE network.">
+  <meta name="author" content="FIBRE">
+  
+  <meta name="theme-name" content="agen-hugo" />
+
+  <!-- plugins -->
+  
+  <link rel="stylesheet" href="http://lclhst.org/plugins/bootstrap/bootstrap.min.css ">
+  
+  <link rel="stylesheet" href="http://lclhst.org/plugins/slick/slick.css ">
+  
+  <link rel="stylesheet" href="http://lclhst.org/plugins/themify-icons/themify-icons.css ">
+  
+  <link rel="stylesheet" href="http://lclhst.org/plugins/venobox/venobox.css ">
+  
+  <link rel="stylesheet" href="http://lclhst.org/plugins/card-slider/css/style.css ">
+  
+
+  <!-- Main Stylesheet -->
+  
+  <link rel="stylesheet" href="http://lclhst.org/scss/style.min.b54209a235ecbc39a638dbdbe9e6410d1d056880a040fefc4f4ec05f4c9734ba.css" integrity="sha256-tUIJojXsvDmmONvb6eZBDR0FaICgQP78T07AX0yXNLo=" media="screen">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="http://lclhst.org/images/favicon.png " type="image/x-icon">
+  <link rel="icon" href="http://lclhst.org/images/favicon.png " type="image/x-icon">
+
+</head><body>
+<!-- preloader start -->
+<div class="preloader">
+  
+</div>
+<!-- preloader end -->
+<header class="navigation fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="http://lclhst.org/"><img src="http://lclhst.org/images/logo.png" alt="FIBRE"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+      aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse text-center" id="navigation">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="http://lclhst.org/"></a>
+        </li>
+        
+        
+        <li class="nav-item">
+          <a class="nav-link" href="http://lclhst.org/faqs/">FAQ</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link" href="http://lclhst.org/setup-guide/">Setup Guide</a>
+        </li>
+        
+        
+        
+        <li class="nav-item">
+          <a class="nav-link" href="https://bitcoinfibre.org/network-stats/">Public Network Stats</a>
+        </li>
+        
+        
+      </ul>
+    </div>
+  </nav>
+</header> 
+<section class="page-title bg-cover" data-background="http://lclhst.org/images/backgrounds/fibre_sol_3.png">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h1 class="display-1 text-white font-weight-bold font-primary">Setup Guide</h1>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="height: 2rem;"></div>
+
+<div style="max-width: 75ch; margin: 0 auto; padding: 0 1rem;">
+  <p>Before reading the setup guide, please review the <a href="">FAQ</a>.</p>
+<p>Setting up and configuring a FIBRE network requires two distinct efforts: investigating and selecting server locations and then configuring and connecting the nodes. For those who wish to become a FIBRE Network Operator (FNO), we strongly recommend you spend time carefully considering and researching the topology of your deployment, as this will be the primary limiting factor on relay performance. Ultimately, software and hardware level optimizations will not be able to overcome poorly-selected interconnects.</p>
+<h3 id="network-topology">Network Topology</h3>
+<br>
+<p>The physics of light through fiber imposes a fundamental limit on relay performance. The speed of light in a vacuum divided by the glass refractive index results in speeds of approximately 200km/ms. Your goal as a FNO is to approach this theoretical minimum.</p>
+<p>To achieve this goal, you’ll want to select servers near large cable landing points. The <a href="https://www.submarinecablemap.com/">Submarine Cable Map</a> is an excellent reference for this phase of your planning.  However, it’s important to note that proximity to a desirable submarine cable does not guarantee access. Hosting providers have peering relationships that vary widely. Even two hosting providers in the same datacenter will often have entirely different routes to the same destination. This is because BGP makes path selections based on policy, commercial agreements, and AS-level relationships rather than physical geography.</p>
+<p>Additionally, some cables are privately owned and managed, making them inaccessible to the general public. A prime example is Meta’s <a href="https://www.submarinecablemap.com/submarine-cable/project-waterworth">Project Waterworth</a> —a cable that runs from the US east coast to Brazil, South Africa, India, and Australia, before looping back to terminate on the US west coast. While the cable itself is very desirable to a FNO, unfortunately it is <a href="https://techcrunch.com/2024/11/29/meta-plans-to-build-a-10b-subsea-cable-spanning-the-world-sources-say/">only accessible</a> to Meta and its subsidiaries.</p>
+<p>When investigating potential hosting providers, we recommend first focusing on those that have public Looking Glass tools. That way you can execute a traceroute between candidate providers to test performance before signing up. And while traceroute is a powerful tool, it can be misleading! It only reveals Layer 3 hops, which means entire classes of infrastructure are not surfaced. Use it as a guide, but treat the output as a partial sketch of the path. Also, do not forget to probe your route bidirectionally, as routing is asymmetric. The path packets from provider A -&gt; B are likely entirely different from the path packets take from B -&gt; A.</p>
+<p>For large well established cities, you may also be able to identify potential datacenters by the buildings they are located in and the publicly documented peering relationships they have. If you can, identify hosting providers that maintain a presence in buildings that are also IXP points. This will give you access to the greatest number of potential routing paths and likely yield higher levels of reliability in routing performance over the lifetime of your FIBRE network. Tools like <a href="https://www.peeringdb.com/">PeeringDB</a> and <a href="https://www.datacentermap.com/">DataCenterMaps</a> are very useful at this stage of the process.</p>
+<p>Sometimes, you may come across a single hosting provider who has availability across multiple cities in your target areas. Operationally this is ideal because it lowers the overhead of managing your infrastructure and makes for a more unified experience. But more importantly, these providers generally operate their own Autonomous Systems and establish strategic peering relationships to ensure optimal routing within their network of hosts. This offers more predictable paths than those you’d achieve by stitching together unrelated hosts from different providers, each of whom would route your traffic independently through their own upstream transit relationships.</p>
+<h3 id="node-setup">Node Setup</h3>
+<br>
+<p>The overhead required to run FIBRE is minimal relative to an unmodified version of Bitcoin Core. While bare metal is certainly the most desirable platform for predictable performance, an adequately resourced VPS should suffice, with the caveat that you may observe latency spikes due to virtualisation overhead, noisy neighbors, network interface poll frequency, and uncontrollable swap usage. It is recommended you disable swap space, at least for the bitcoind process.</p>
+<p>FIBRE introduces some RPC commands and configuration options. Among these is the <code>-addtrustedudpnode</code> option, which connects a set of &ldquo;trusted&rdquo; FIBRE nodes. These nodes are considered trusted because data received from them is relayed before being fully validated. This is necessary because, due to the nature of FIBRE&rsquo;s FEC encoding, there is no way to know whether individual packets are legitimate until the block has been fully reconstructed. This represents the fundamental tradeoff that FIBRE makes: sacrificing DoS resistance in exchange for lower latency.</p>
+<p>Once you’ve set up your network, you must monitor it. Peering relationships change and once-performant routes can silently degrade. To that end, we&rsquo;ve instrumented bitcoind with USDT tracepoints for benchmarking block propagation. At runtime, an eBPF-based exporter captures these metrics and feeds them to Prometheus while Promtail streams the node&rsquo;s debug log into Loki. Both sources converge in a single Grafana dashboard, offering a real-time view of relay health.</p>
+<p>Finally, to ensure the reliability of the data surfaced by these monitoring tools, it is important that your FIBRE nodes are time-synced. We recommend utilizing ntp with peering between neighboring nodes to establish a relative consensus, while anchoring each node to a reliable ntp server.</p>
+
+</div>
+
+
+
+<style>
+  #site-footer a { color: white !important; text-decoration: underline; }
+</style>
+
+<section
+  id="site-footer"
+  style="
+    background-image: url('http://lclhst.org/images/banner/fibre_sol_footer.png');
+    background-size: cover;
+    background-position: center;
+    padding: 1.5rem 1rem;      /* Lower height */
+    margin-top: 3rem;
+    color: white;
+  "
+>
+  <div style="max-width: 75ch; margin: 0 auto; text-align: center;">
+    <h2 style="
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;       /* Smaller heading */
+      color: white;
+      font-weight: 600;
+    ">
+      
+    </h2>
+    <p style="
+      text-align: center;
+      color: white;
+      font-size: 0.875rem;
+      margin: 0;
+    ">
+      MIT License. <a href="https://github.com/bitcoinfibre/bitcoinfibre">Source</a>.
+    </p>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<!-- Google Map API -->
+<script src="http://lclhst.org/"></script>
+<!-- JS Plugins -->
+
+<script src="http://lclhst.org/plugins/jQuery/jquery.min.js"></script>
+
+<script src="http://lclhst.org/plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="http://lclhst.org/plugins/slick/slick.min.js"></script>
+
+<script src="http://lclhst.org/plugins/venobox/venobox.min.js"></script>
+
+<script src="http://lclhst.org/plugins/shuffle/shuffle.min.js"></script>
+
+<script src="http://lclhst.org/plugins/counto/apear.js"></script>
+
+<script src="http://lclhst.org/plugins/counto/counTo.js"></script>
+
+<script src="http://lclhst.org/plugins/card-slider/js/card-slider-min.js"></script>
+
+<!-- Main Script -->
+
+<script src="http://lclhst.org/js/script.min.js"></script></body>
+</html>
