@@ -87,7 +87,7 @@
 <div style="height: 2rem;"></div>
 
 <div style="max-width: 75ch; margin: 0 auto; padding: 0 1rem;">
-  <p>Before reading the setup guide, please review the <a href="">FAQ</a>.</p>
+  <p>Before reading the setup guide, please review the <a href="https://bitcoinfibre.org/faqs/">FAQ</a>.</p>
 <p>Setting up and configuring a FIBRE network requires two distinct efforts: investigating and selecting server locations and then configuring and connecting the nodes. For those who wish to become a FIBRE Network Operator (FNO), we strongly recommend you spend time carefully considering and researching the topology of your deployment, as this will be the primary limiting factor on relay performance. Ultimately, software and hardware level optimizations will not be able to overcome poorly-selected interconnects.</p>
 <h3 id="network-topology">Network Topology</h3>
 <br>
@@ -101,7 +101,7 @@
 <br>
 <p>The overhead required to run FIBRE is minimal relative to an unmodified version of Bitcoin Core. While bare metal is certainly the most desirable platform for predictable performance, an adequately resourced VPS should suffice, with the caveat that you may observe latency spikes due to virtualisation overhead, noisy neighbors, network interface poll frequency, and uncontrollable swap usage. It is recommended you disable swap space, at least for the bitcoind process.</p>
 <p>FIBRE introduces some RPC commands and configuration options. Among these is the <code>-addtrustedudpnode</code> option, which connects a set of &ldquo;trusted&rdquo; FIBRE nodes. These nodes are considered trusted because data received from them is relayed before being fully validated. This is necessary because, due to the nature of FIBRE&rsquo;s FEC encoding, there is no way to know whether individual packets are legitimate until the block has been fully reconstructed. This represents the fundamental tradeoff that FIBRE makes: sacrificing DoS resistance in exchange for lower latency.</p>
-<p>Once you’ve set up your network, you must monitor it. Peering relationships change and once-performant routes can silently degrade. To that end, we&rsquo;ve instrumented bitcoind with USDT tracepoints for benchmarking block propagation. At runtime, an eBPF-based exporter captures these metrics and feeds them to Prometheus while Promtail streams the node&rsquo;s debug log into Loki. Both sources converge in a single Grafana dashboard, offering a real-time view of relay health.</p>
+<p>Once you’ve set up your network, you must monitor it. Peering relationships change and once-performant routes can silently degrade. To that end, we&rsquo;ve instrumented bitcoind with USDT tracepoints for benchmarking block propagation. At runtime, an eBPF-based exporter captures these metrics and feeds them to Prometheus while Promtail streams the node&rsquo;s debug log into Loki. Both sources converge in a single Grafana dashboard, offering a real-time view of relay health. We strongly encourage you to use <a href="https://github.com/bitcoinfibre/fibre-monitoring">this tool</a>.</p>
 <p>Finally, to ensure the reliability of the data surfaced by these monitoring tools, it is important that your FIBRE nodes are time-synced. We recommend utilizing ntp with peering between neighboring nodes to establish a relative consensus, while anchoring each node to a reliable ntp server.</p>
 
 </div>

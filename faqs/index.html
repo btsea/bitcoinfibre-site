@@ -158,7 +158,7 @@
             </div>
             <div id="accordion4" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                Compact Blocks is a relay protocol that minimizes both the bandwidth and latency required for block propagation by utilizing techniques of compression and reconstruction. Instead of propagating a full block and its contents, peers announce compact blocks with shortened transaction ids. The receiving peer can, to the extent possible, reconstruct the block utilizing the contents of their local mempool. The FIBRE protocol utilizes Compact Blocks as a foundation for its patchset, upon which it introduces additional logic.
+                <a href="https://github.com/bitcoin/bips/blob/master/bip-0152.mediawiki">Compact Blocks</a> is a relay protocol that minimizes both the bandwidth and latency required for block propagation by utilizing techniques of compression and reconstruction. Instead of propagating a full block and its contents, peers announce compact blocks with shortened transaction ids. The receiving peer can, to the extent possible, reconstruct the block utilizing the contents of their local mempool. The FIBRE protocol utilizes Compact Blocks as a foundation for its patchset, upon which it introduces additional logic.
               </div>
             </div>
           </div>
@@ -175,7 +175,7 @@
             </div>
             <div id="accordion5" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                The FIBRE protocol is a patchset that is maintained against Bitcoin Core. Within this patchset are two primary changes<code>:</code> the introduction of the UDP transport protocol as well as logic to support Forward Error Correction. There are also additional configuration options and some modifications made to the Compact Block peering logic.
+                The FIBRE protocol is a patchset that is maintained against Bitcoin Core. Within this patchset are two primary changes: the introduction of the UDP transport protocol as well as logic to support Forward Error Correction. There are also additional configuration options and some modifications made to the Compact Block peering logic.
               </div>
             </div>
           </div>
@@ -192,7 +192,7 @@
             </div>
             <div id="accordion6" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                Yes! The protocol is <a href="">open source</a>.
+                Yes! The protocol is <a href="https://github.com/bitcoinfibre/bitcoinfibre">open source</a>.
               </div>
             </div>
           </div>
@@ -243,7 +243,7 @@
             </div>
             <div id="accordion9" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                Because Compact Block was being designed at the same time that Matt Corallo started his work on FIBRE, the cmpctblock message format was structured to ensure it fits neatly into a UDP-FEC-based relay mechanism. The primary difference between FIBRE and the standard Compact Blocks protocol is that FIBRE send the message over UDP with FEC, and instead of relying on a round-trip to request any missing transactions in our mempool, FIBRE sends the block’s transactions immediately, again with FEC.
+                Because Compact Block was being designed at the same time that Matt Corallo started his work on FIBRE, the cmpctblock message format was structured to ensure it fits neatly into a UDP-FEC-based relay mechanism. The primary difference between FIBRE and the standard Compact Blocks protocol is that FIBRE sends messages over UDP with FEC, and instead of relying on a round-trip to request any missing transactions in our mempool, FIBRE sends the block’s transactions immediately, again with FEC.
               </div>
             </div>
           </div>
@@ -260,7 +260,7 @@
             </div>
             <div id="accordion10" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                During FIBRE’s initial design phase, Matt Corallo and Greg Maxwell researched a number of FEC schemes designed by <a href="">Chris Taylor</a>, including <a href="">leopard</a> and <a href="">fecal</a>. Given network conditions at the time, wirehair was most performant. If you are familiar with erasure codes and are aware of a more performant FEC scheme that you would like to propose, please <a href="">open an issue</a>.
+                During FIBRE’s initial design phase, Matt Corallo and Greg Maxwell researched a number of FEC schemes designed by <a href="https://catid.io/">Chris Taylor</a>, including <a href="https://github.com/catid/leopard">leopard</a> and <a href="https://github.com/catid/fecal">fecal</a>. Given network conditions at the time, wirehair was most performant. If you are familiar with erasure codes and are aware of a more performant FEC scheme that you would like to propose, please <a href="https://github.com/bitcoinfibre/bitcoinfibre/issues/">open an issue</a>.
               </div>
             </div>
           </div>
@@ -277,7 +277,7 @@
             </div>
             <div id="accordion11" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                Compact Block has two modes<code>:</code> “low-bandwidth” and “high-bandwidth.” In the low-bandwidth mode, compact block delivery requires a communication round trip. In high-bandwidth mode, compact block announcements include the block’s short transaction IDs, thus avoiding a round trip. Currently, Bitcoin Core only supports three high-bandwidth peer slots. These slots are reserved for the best performing peers (i.e. the peers who deliver blocks to you the fastest). The FIBRE protocol announces all of its compact blocks in high-bandwidth mode, regardless of whether or not it has secured a high-bandwidth slot with its non-FIBRE peers. It is expected that FIBRE nodes will ultimately secure High Bandwidth slots, but to ensure best performance in all contexts, it operates all of its outbound connections as though they were high-bandwidth. Bitcoin Core does not penalize or discourage this behavior. <br><br> Additionally, FIBRE nodes relay individual packets to their peers as soon as they arrive (i.e. before validating them), thereby avoiding latency introduced by additional hops.
+                Compact Block has two modes: <code>low-bandwidth</code> and <code>high-bandwidth.</code> In the low-bandwidth mode, compact block delivery requires a communication round trip. In high-bandwidth mode, compact block announcements include the block’s short transaction IDs, thus avoiding a round trip. Currently, Bitcoin Core only supports three high-bandwidth peer slots. These slots are reserved for the best performing peers (i.e. the peers who deliver blocks to you the fastest). FIBRE relaxes this limit such that it can offer more of these slots to its potential peers. <br><br> Additionally, FIBRE nodes relay individual packets to their peers as soon as they arrive (i.e. before validating them), thereby avoiding latency introduced by additional hops.
               </div>
             </div>
           </div>
@@ -328,7 +328,7 @@
             </div>
             <div id="accordion14" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                Anyone can deploy a FIBRE network and become a FNO. One such production network is operated by the non-profit research center, Localhost Research. Currently, Localhost Research operates a network that connects New York, London, Frankfurt, Beijing, Tokyo, and Seattle. You can observe the network statistics <a href="https://bitcoinfibre.org/network-stats/">here</a>.
+                Anyone can deploy a FIBRE network and become a FNO. One such production network is operated by the non-profit research center, Localhost Research. Currently, Localhost Research operates a network that connects New York, London, Frankfurt, Beijing, Tokyo, and Seattle. You can observe the network statistics <a href="https://stats.bitcoinfibre.org">here</a>.
               </div>
             </div>
           </div>
@@ -345,7 +345,7 @@
             </div>
             <div id="accordion15" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                No, you don’t need to run a FIBRE node! You are only required to run Bitcoin Core or similar software that is compatible with the Compact Blocks specification. Once you have selected a FIBRE node with ideal peering to your mining operation’s template producer, you can simply use the addnode configuration option. We&rsquo;ll have more information on how to connect in the coming weeks.
+                No, you don’t need to run a FIBRE node! You are only required to run Bitcoin Core or similar software that is compatible with the Compact Blocks specification. Once you have selected a FIBRE node with ideal peering to your mining operation’s template producer, you can simply use the <code>-addnode</code> configuration option. We&rsquo;ll have more information on how to connect in the coming weeks.
               </div>
             </div>
           </div>
@@ -379,7 +379,7 @@
             </div>
             <div id="accordion17" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                While any single FIBRE network is centrally operated, anyone can spin up a network of FIBRE nodes. In fact, we strongly encourage independent FIBRE network operation and are happy to assist anyone with questions not answered here and in our <a href="">setup guide</a>.
+                While any single FIBRE network is centrally operated, anyone can spin up a network of FIBRE nodes. In fact, we strongly encourage independent FIBRE network operation and are happy to assist anyone with questions not answered here and in our <a href="http://bitcoinfibre.org/setup-guide/">setup guide</a>.
               </div>
             </div>
           </div>
@@ -396,7 +396,7 @@
             </div>
             <div id="accordion18" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                Please read our <a href="">Setup Guide</a>.
+                Please read our <a href="http://bitcoinfibre.org/setup-guide/">Setup Guide</a>.
               </div>
             </div>
           </div>
@@ -413,7 +413,7 @@
             </div>
             <div id="accordion19" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                The FIBRE network is the successor to Matt Corallo’s <a href="https://bitcoinrelaynetwork.org/">Bitcoin Relay Network</a>). With his experience operating and studying the Bitcoin Relay network from XXXX to XXXX, alongside <a href="https://nt4tn.net/tech-notes/201512.lowlatency.block.xfer.txt">some</a> <a href="https://nt4tn.net/tech-notes/201512.efficient.block.xfer.txt">research</a> done by Greg Maxwell, Matt Corallo <a href="https://bluematt.bitcoin.ninja/2016/07/07/relay-networks/">designed, implemented, and maintained</a> the FIBRE protocol from XXXX until April 2017. In 2025, the maintenance of the project was taken over by w0xlt and Justin of Localhost Research under the advisory of Matt Corallo and Greg Maxwell.
+                The FIBRE network is the successor to Matt Corallo’s <a href="https://bitcoinrelaynetwork.org/">Bitcoin Relay Network</a>). With his experience operating and studying the Bitcoin Relay network from 2014 to 2016, alongside <a href="https://nt4tn.net/tech-notes/201512.lowlatency.block.xfer.txt">some</a> <a href="https://nt4tn.net/tech-notes/201512.efficient.block.xfer.txt">research</a> done by Greg Maxwell, Matt Corallo <a href="https://bluematt.bitcoin.ninja/2016/07/07/relay-networks/">designed, implemented, and maintained</a> the FIBRE protocol from 2016 until April 2017. In 2025, the maintenance of the project was taken over by w0xlt and Justin of <a href="https://lclhost.org">Localhost Research</a> under the advisory of Matt Corallo and Greg Maxwell.
               </div>
             </div>
           </div>
@@ -430,7 +430,7 @@
             </div>
             <div id="accordion20" class="collapse" data-parent="#accordion">
               <div class="card-body font-secondary text-light" style="background-color: #1a1a1a;">
-                FIBRE improves on the design of the Bitcoin Relay Network primarily in two ways<code>:</code> it eliminates latency spikes by utilizing FEC and leverages the Compact Blocks protocol that has since become available in Bitcoin Core. For additional historical context, please read Matt Corallo&rsquo;s <a href="https://bluematt.bitcoin.ninja/2016/07/07/relay-networks/">The Future of The Bitcoin Relay Network(s).</a>
+                FIBRE improves on the design of the Bitcoin Relay Network primarily in two ways: it eliminates latency spikes by utilizing FEC and leverages the Compact Blocks protocol that has since become available in Bitcoin Core. For additional historical context, please read Matt Corallo&rsquo;s <a href="https://bluematt.bitcoin.ninja/2016/07/07/relay-networks/">The Future of The Bitcoin Relay Network(s)</a>.
               </div>
             </div>
           </div>
