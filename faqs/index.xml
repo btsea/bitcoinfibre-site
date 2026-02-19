@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Frequently Asked Questions on FIBRE</title>
-    <link>http://lclhst.org/faqs/</link>
+    <link>http://bitcoinfibre.org/faqs/</link>
     <description>Recent content in Frequently Asked Questions on FIBRE</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate></lastBuildDate>
-    <atom:link href="http://lclhst.org/faqs/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://bitcoinfibre.org/faqs/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
